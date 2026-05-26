@@ -1,3 +1,4 @@
+use core::num;
 use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
@@ -13,44 +14,44 @@ fn main() {
     //to include the last number you can use the equal sign
 
     println!("Hello, world!");
-    println!("guess the number");
     
     let x = 5;
     let y = 10;
 
     println!("x = {x} and y + 2 = {}", y + 2);
 
-    //guesssing game
+   
+   
     println!("Guess the number");
     println!("the secret number is {secret_number}");
-    println!("Please input your guess");
+   
+  
+//If parse is able to successfully turn the string into a number, it will return an Ok value that contains the resultant number. That Ok value will match the first arm’s pattern, and the match expression will just return the num value that parse produced and put inside the Ok value.
+loop {
+     println!("Pleaseinput your guess");
 
-    io::stdin()
+
+   io::stdin()
     .read_line(&mut guess)
     .expect("Faild to read line");
 
+    let guess : u32 = match guess.trim().parse(){
+        Ok(num) => num,
+        Err(_) => continue, //it can't execute outside a loop
+
+    };
+
     println!("You guessed: {guess}");
-
-    let guess : u32 = guess.trim().parse().expect("Please type a number bro");
-
-    //We use a match expression to decide what to do next based on which variant of Ordering was returned from the call to cmp with the values in guess and secret_number
-
-    //The cmp method compares
-//two values and can be called on anything that can be compared. It takes a reference to whatever you
-//want to compare with: here it’s comparing guess to secret_number .
-
-//here it’s comparing guess to secret_number . Then it returns a variant of the
-//Ordering enum we brought into scope with the use statement
 
     match guess.cmp(&secret_number){
 
     Ordering::Less => println!("Too small"), //=> is not a mathematical operater bro
     Ordering::Greater => println!("Too big"),
-    Ordering::Equal => println!("You win"),
-    }
+    Ordering::Equal => {println!("You win!");
+                        break;}
+    
 
-    //rust allow us to shadow a variable
-    //The trim method on a String instance will eliminate any whitespace at the beginning and end,
-    //The parse method on strings converts a string to another type. Here, we use it to convert from a string to a number
-    // we can convert the string to a u32, (watch the up)
 }
+}
+}
+
