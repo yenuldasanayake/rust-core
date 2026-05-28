@@ -1,34 +1,19 @@
-use core::num;
 use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
 
 
 fn main() {
-
-
-    let mut guess = String::new();
-    let apples = 5;
-    let secret_number = rand::thread_rng().gen_range(1..=100);
-    // we need to specify 1..=100 to request a number between 1 and 100 
-    //to include the last number you can use the equal sign
-
-    println!("Hello, world!");
-    
-    let x = 5;
-    let y = 10;
-
-    println!("x = {x} and y + 2 = {}", y + 2);
-
-   
-   
     println!("Guess the number");
+    let secret_number = rand::thread_rng().gen_range(1..=100);
     println!("the secret number is {secret_number}");
    
-  
-//If parse is able to successfully turn the string into a number, it will return an Ok value that contains the resultant number. That Ok value will match the first arm’s pattern, and the match expression will just return the num value that parse produced and put inside the Ok value.
-loop {
+   
+   loop {
+
      println!("Pleaseinput your guess");
+     let mut guess = String::new() ;
+        
 
 
    io::stdin()
@@ -41,7 +26,9 @@ loop {
 
     };
 
-    println!("You guessed: {guess}");
+     println!("you guessed {guess}")
+;
+   
 
     match guess.cmp(&secret_number){
 
@@ -49,9 +36,29 @@ loop {
     Ordering::Greater => println!("Too big"),
     Ordering::Equal => {println!("You win!");
                         break;}
-    
 
 }
 }
+
+let mut  x = 5;
+println!("the value of x is {x}");
+x = 6;
+println!("the value of x is {x}");
+
+//const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+//shadowing
+//When that scope is over, the inner shadowing ends and x returns to being 8 .
+
+let y = 7;
+let y = y + 1 ;
+//scope
+{
+    let y = y*15;
+    println!("the value of the inner svope is: {y}");
+}
+println!("the value of y is {y}");
+//we’ll get a compile-time error if we accidentally try to reassign to this variable without using the let keyword.
+
+
 }
 
