@@ -59,6 +59,12 @@ let y = y + 1 ;
 println!("the value of y is {y}");
 //we’ll get a compile-time error if we accidentally try to reassign to this variable without using the let keyword.
 
+let spaces = "             " ;
+let spaces = spaces.len();
+//Think of .len() as short for length.
+//You create a variable named spaces and put text in it ("   ").
+//ou use the let keyword again. Rust says, "Okay, we are destroying the old spaces variable and making a brand new one." Then it counts the length of the old text (which is 3) and saves that number 3 into the new spaces variable.
+
 
 }
 
