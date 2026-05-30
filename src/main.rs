@@ -1,6 +1,6 @@
+use core::num;
 use std::io;
 use std::cmp::Ordering;
-use std::os::unix::io;
 use std::ptr::{null, null_mut};
 use rand::Rng;
 
@@ -68,15 +68,28 @@ println!("the value of y is {y}");
 // git push -u origin your-branch-name
 
 let mut balance = 500;
-let mut amount  = String::new();
+
 
 loop {
+
+    let mut amount  = String::new();
 
     println!("your available balance is {balance}");
     io::stdin().read_line(&mut amount).expect("system crashed");
 
-    //shadowing but idk wft am i doing now
-    let amount :i32 =  amount.trim().parse().expect("please type a number");
+    //Rust hates crashes. Rust wants to know: "What is the backup plan if the user types garbage?"
+    //Inside that gift box, there are only two possibilities:
+    //Ok(num) -> "Everything went great, here is the actual number!"
+    //"I opened the box and it's an Ok! It contains a valid number (which we will temporarily call num). Because this matched, I am going to pass that num out of the match game and save it into our final amount variable."
+
+    //Err(_) -> "Uh oh, they typed letters. This is an error."
+    //"I opened the box and it's an Err (an error). The user typed something stupid like 'abc'. The _ means 'I don't care what kind of error it is'. Instead of saving a number, I am hitting the continue button. This instantly stops what we are doing, ignores the rest of the code below, and jumps right back to the top of the loop to ask the user again."
+     
+let amount: i32 = match amount.trim().parse() {
+    Ok(num) => num,
+    Err(_) => continue, 
+};
+
 
    match amount.cmp(&balance){
     Ordering::Equal => {
@@ -89,7 +102,11 @@ loop {
     }
     Ordering::Less => {
         println!("procesing");
-        let balance = balance - amount ;
+        balance = balance - amount ;
+
+        //Because you used let, you accidentally shadowed the balance only inside those curly braces { }. You created a temporary, brand-new balance variable that disappears the moment that Less block ends.
+        //But imagine if you didn't break the loop, and you let the user make another withdrawal. Because you didn't actually change the original mut balance = 500, their bank account would magically reset back to 500! Free money! 🤑
+
         println!("take your cash");
         println!("your remaining balance is {balance}");
         println!("thanks for banking with us, have a nice day sir");
