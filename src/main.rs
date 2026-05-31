@@ -1,5 +1,6 @@
 use core::num;
-use std::io;
+use std::thread::LocalKey;
+use std::{io, string};
 use std::cmp::Ordering;
 use std::ptr::{null, null_mut};
 use rand::Rng;
@@ -117,6 +118,45 @@ let amount: i32 = match amount.trim().parse() {
     }
 
    }
+
+
+
+}
+
+let maxlength = 12 ;
+let minlength = 1 ;
+
+//challenge 2
+loop {
+    let mut  username = String::new();
+    println!("please input your new username");
+
+    io::stdin().read_line(&mut username).expect("erro");
+
+    //Think of .expect() as an "automatic bomb." If something goes wrong, it immediately crashes the program with your error message.match is a game where you have to look at every possible outcome (Ok or Err) and provide arms (=>) for themWhen you write match username.trim().expect("error"), you are telling the computer to explode if there's an error, but then you don't provide any match arms for what happens if it succeeds! A match statement must have curly braces {} and arms.
+
+    let username = username.trim();
+    let username = username.len();
+
+    if username >= minlength {
+
+        if username <= maxlength {
+            println!("approved");
+            break;
+            
+        }
+
+        if username > maxlength {
+
+        println!("username cannot be more than 12 characters");
+        }   
+
+    }
+
+
+       else {
+           println!("username cannot be empty");
+       }
 
 
 
